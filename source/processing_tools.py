@@ -1,6 +1,35 @@
 import pandas as pd
 from Bio import SeqIO
 
+from typing import Union, List, Dict
+from Bio.SeqRecord import SeqRecord
+
+
+
+
+def read_fasta(fasta_file: str, return_type: str = "dict") -> Union[Dict[str, str], List[SeqRecord]]:
+    """
+    Reads a FASTA file and returns the sequences as either a dictionary or a list of SeqRecord objects.
+
+    Parameters:
+    fasta_file (str): Path to the input FASTA file.
+    return_type (str): The type of return value. Choose 'dict' for a dictionary or 'biopython' for SeqRecord objects.
+
+    Returns:
+    Union[Dict[str, str], List[SeqRecord]]: A dictionary of sequences if return_type is 'dict',
+                                           or a list of SeqRecord objects if return_type is 'biopython'.
+    """
+    records = list(SeqIO.parse(fasta_file, "fasta"))
+
+    if return_type == "dict":
+        fasta_dict = {record.id: str(record.seq) for record in records}
+        return fasta_dict
+    elif return_type == "biopython":
+        return records
+    else:
+        raise ValueError("Invalid return_type specified. Use 'dict' or 'biopython'.")
+
+
 def fasta_to_csv(fasta_file: str, csv_file: str, header_col: str = "Header", seq_col: str = "Sequence"):
     """
     Converts a FASTA file to a CSV file.
