@@ -36,7 +36,7 @@ def find_best_alignment(query_sequence: str, reference_sequences: list) -> tuple
             best_alignment = alignments[0]
 
     
-    return best_match_name, best_aligment
+    return best_match_name, best_alignment
 
 
 
